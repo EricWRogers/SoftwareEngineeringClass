@@ -115,7 +115,7 @@ namespace testDotNet
             // Dev Mode will enable functions that are usfull for testing
             // Should only be set true while in testing
             devMode = true;
-            //Make the Folders
+            // Make the Folders
             makeFolder("Test");
             makeFolder("StudentAnswer");
             LoadTest();
