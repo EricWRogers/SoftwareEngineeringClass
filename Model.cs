@@ -43,10 +43,10 @@ namespace testDotNet
             {
                 // Only get files that end file extention .test
                 TestPack = Directory.GetFiles("./Test", "*.test");
-                Console.WriteLine("The number of files ending with .test is {0}.", TestPack.Length);
+                MessageLog("The number of files ending with .test is " + TestPack.Length);
                 foreach (string test in TestPack) 
                 {
-                    Console.WriteLine(test);
+                    MessageLog(test);
                 }
                 return TestPack;
             } 
@@ -64,10 +64,10 @@ namespace testDotNet
             {
                 // Only get files that end file extention .testAnswer
                 TestPack = Directory.GetFiles("./StudentAnswer", "*.testAnswer");
-                Console.WriteLine("The number of files ending with .testAnswer is {0}.", TestPack.Length);
+                MessageLog("The number of files ending with .testAnswer is " +  TestPack.Length);
                 foreach (string test in TestPack) 
                 {
-                    Console.WriteLine(test);
+                    MessageLog(test);
                 }
                 return TestPack;
             } 
