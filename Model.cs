@@ -20,6 +20,7 @@ namespace testDotNet
         public string TestName { get; set; }
         public List<string> Question = new List<string>();
         public List<string[]> Answer = new List<string[]>();
+        public List<string[]> StudentAnswer = new List<string[]>();
     }
     class Test
     {
@@ -32,9 +33,11 @@ namespace testDotNet
     
 
 
-    class Program
+    class Model
     {
+        #region ClassValue
         private static bool devMode = false;
+        #endregion
         #region IO
         public static string[] LoadTest ()
         {
@@ -123,21 +126,29 @@ namespace testDotNet
 
             
 
-            Console.WriteLine("Hello World!, from Eric");
+            MessageLog("Hello World!, from Eric");
 
-            StudentsTestCopy player = new StudentsTestCopy();
-            player.Name = "Eric";
-            player.Id = "Shield";
-            player.Question.Add("How heigh is tall?");
-            player.Answer.Add(new string[] {"WTF"});
+            Test test = new Test();
+            test.key = "Eric";
+            test.TestName = "SE_Test_01";
+            test.Question.Add("How heigh is tall?");
+            test.Answer.Add(new string[] {"Very tall"});
 
-            string json = JsonConvert.SerializeObject(player);
+            string json = JsonConvert.SerializeObject(test);
 
-            Console.WriteLine(json);
+            MessageLog(json);
+            // Test Saving file
+            System.IO.File.WriteAllText("./Test/" + test.TestName + ".test", json);
+            // Test Loading Test
+            foreach( string t in LoadTest() )
+            {
+                string[] lines = File.ReadAllLines(@t);
+                MessageLog(lines[0]);
+            }
 
-            StudentsTestCopy playerCopy = JsonConvert.DeserializeObject<StudentsTestCopy>(json);
-            json = JsonConvert.SerializeObject(playerCopy);
-            Console.WriteLine(json);
+            //StudentsTestCopy playerCopy = JsonConvert.DeserializeObject<StudentsTestCopy>(json);
+            //json = JsonConvert.SerializeObject(playerCopy);
+            //MessageLog(json);
         }
     }
 }
