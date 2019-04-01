@@ -39,14 +39,14 @@ namespace testDotNet
         private static bool devMode = false;
         #endregion
         #region IO
-        public static string[] LoadTest ()
+        public static string[] LoadAvailableTest ( string dir, string fileEx )
         {
             String[] TestPack = {"Error"};
             try 
             {
                 // Only get files that end file extention .test
-                TestPack = Directory.GetFiles("./Test", "*.test");
-                MessageLog("The number of files ending with .test is " + TestPack.Length);
+                TestPack = Directory.GetFiles(dir, "*." + fileEx);
+                MessageLog("The number of files ending with ." + fileEx +" is " + TestPack.Length);
                 foreach (string test in TestPack) 
                 {
                     MessageLog(test);
@@ -57,27 +57,6 @@ namespace testDotNet
             {
                 Console.WriteLine("The process failed: {0}", e.ToString());
                 Console.WriteLine("No Test were found");
-                return TestPack;
-            }
-        }
-        public static string[] LoadStudentTest ()
-        {
-            String[] TestPack = {"Error"};
-            try 
-            {
-                // Only get files that end file extention .testAnswer
-                TestPack = Directory.GetFiles("./StudentAnswer", "*.testAnswer");
-                MessageLog("The number of files ending with .testAnswer is " +  TestPack.Length);
-                foreach (string test in TestPack) 
-                {
-                    MessageLog(test);
-                }
-                return TestPack;
-            } 
-            catch (Exception e) 
-            {
-                Console.WriteLine("The process failed: {0}", e.ToString());
-                Console.WriteLine("No Stundent Test were found");
                 return TestPack;
             }
         }
@@ -121,8 +100,9 @@ namespace testDotNet
             // Make the Folders
             makeFolder("Test");
             makeFolder("StudentAnswer");
-            LoadTest();
-            LoadStudentTest();
+            LoadAvailableTest("./Test", "test");
+            LoadAvailableTest("./StudentAnswer", "testAnswer");
+
 
             
 
@@ -140,7 +120,7 @@ namespace testDotNet
             // Test Saving file
             System.IO.File.WriteAllText("./Test/" + test.TestName + ".test", json);
             // Test Loading Test
-            foreach( string t in LoadTest() )
+            foreach( string t in LoadAvailableTest("./Test", "test") )
             {
                 string[] lines = File.ReadAllLines(@t);
                 MessageLog(lines[0]);
