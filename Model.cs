@@ -1,27 +1,14 @@
 ﻿using System;  
 using System.IO;  
 using System.Collections;
-using Newtonsoft.Json;
-//using Newtonsoft.Json.Linq;  
-//using System.Xml.Serialization; 
+using Newtonsoft.Json; 
 using System.Collections.Generic;
 using System.Runtime.Serialization;
-//using System.Runtime.Serialization.Json;
-//using System.Runtime.Serialization.Formatters;
-//using System.Runtime.Serialization.Formatters.Binary;
 
 
 namespace testDotNet
 {
-    class StudentsTestCopy
-    {
-        public string Name { get; set; }
-        public string Id { get; set; }
-        public string TestName { get; set; }
-        public List<string> Question = new List<string>();
-        public List<string[]> Answer = new List<string[]>();
-        public List<string[]> StudentAnswer = new List<string[]>();
-    }
+    
     class Test
     {
         public string key { get; set; }
@@ -29,9 +16,12 @@ namespace testDotNet
         public List<string> Question = new List<string>();
         public List<string[]> Answer = new List<string[]>();
     }
-
-    
-
+    class StudentsTest : Test
+    {
+        public string Name { get; set; }
+        public string Id { get; set; }
+        public List<string[]> StudentAnswer = new List<string[]>();
+    }
 
     class Model
     {
@@ -60,13 +50,18 @@ namespace testDotNet
                 return TestPack;
             }
         }
-        public void SaveGoldCopy ()
+        public static void SaveTest ( Test test, string dir, string fileName, string fileEx)
         {
-
-        }
-        public void SaveStudentCopy ()
-        {
-
+            try
+            {
+                string json = JsonConvert.SerializeObject(test);
+                System.IO.File.WriteAllText(dir + "/" + fileName + "." + fileEx, json);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+                Console.WriteLine("Error saving test");
+            }
         }
         private static bool makeFolder( string FolderName)
         {
@@ -119,6 +114,9 @@ namespace testDotNet
             MessageLog(json);
             // Test Saving file
             System.IO.File.WriteAllText("./Test/" + test.TestName + ".test", json);
+
+            SaveTest(test, "./Test", "SE_Test_02", "test");
+
             // Test Loading Test
             foreach( string t in LoadAvailableTest("./Test", "test") )
             {
