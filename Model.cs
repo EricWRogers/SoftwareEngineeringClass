@@ -25,7 +25,7 @@ namespace testDotNet
 
     class Model
     {
-        #region ClassValue
+        #region ModelValue
         private static bool devMode = false;
         #endregion
         #region IO
@@ -114,26 +114,29 @@ namespace testDotNet
             LoadAvailableTest("./Test", "test");
             LoadAvailableTest("./StudentAnswer", "testAnswer");
 
-
-
-
-            MessageLog("Hello World!, from Eric");
-
+            // Making test object
+            // This will not be done here in the future
             Test test = new Test();
             test.key = "Eric";
             test.TestName = "SE_Test_01";
             test.Question.Add("How heigh is tall?");
             test.Answer.Add(new string[] {"Very tall"});
 
+            // Convert test object into json string
             string json = JsonConvert.SerializeObject(test);
 
+            // Printing json string
             MessageLog(json);
+
             // Test Saving file
             System.IO.File.WriteAllText("./Test/" + test.TestName + ".test", json);
 
+            // Saving test data to file in test folder
             SaveTest(test, "./Test", "SE_Test_02", "test");
 
-            // Test Loading Test
+            // Load an array of file paths as string
+            // Cycle through them 
+            // Print the json
             foreach( string t in LoadAvailableTest("./Test", "test") )
             {
                 string[] lines = File.ReadAllLines(@t);
