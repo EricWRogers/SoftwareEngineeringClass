@@ -1,14 +1,14 @@
-﻿using System;  
-using System.IO;  
+﻿using System;
+using System.IO;
 using System.Collections;
-using Newtonsoft.Json; 
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 
 namespace testDotNet
 {
-    
+
     class Test
     {
         public string key { get; set; }
@@ -32,22 +32,35 @@ namespace testDotNet
         public static string[] LoadAvailableTest ( string dir, string fileEx )
         {
             String[] TestPack = {"Error"};
-            try 
+            try
             {
                 // Only get files that end file extention .test
                 TestPack = Directory.GetFiles(dir, "*." + fileEx);
                 MessageLog("The number of files ending with ." + fileEx +" is " + TestPack.Length);
-                foreach (string test in TestPack) 
+                foreach (string test in TestPack)
                 {
                     MessageLog(test);
                 }
                 return TestPack;
-            } 
-            catch (Exception e) 
+            }
+            catch (Exception e)
             {
                 Console.WriteLine("The process failed: {0}", e.ToString());
                 Console.WriteLine("No Test were found");
                 return TestPack;
+            }
+        }
+        public static void SaveTest ( Test test, string file)
+        {
+            try
+            {
+                string json = JsonConvert.SerializeObject(test);
+                System.IO.File.WriteAllText(file, json);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("The process failed: {0}", e.ToString());
+                Console.WriteLine("Error saving test");
             }
         }
         public static void SaveTest ( Test test, string dir, string fileName, string fileEx)
@@ -92,14 +105,17 @@ namespace testDotNet
             // Dev Mode will enable functions that are usfull for testing
             // Should only be set true while in testing
             devMode = true;
+
             // Make the Folders
             makeFolder("Test");
             makeFolder("StudentAnswer");
+
+            // Load String[] of Test filepaths
             LoadAvailableTest("./Test", "test");
             LoadAvailableTest("./StudentAnswer", "testAnswer");
 
 
-            
+
 
             MessageLog("Hello World!, from Eric");
 
@@ -123,10 +139,6 @@ namespace testDotNet
                 string[] lines = File.ReadAllLines(@t);
                 MessageLog(lines[0]);
             }
-
-            //StudentsTestCopy playerCopy = JsonConvert.DeserializeObject<StudentsTestCopy>(json);
-            //json = JsonConvert.SerializeObject(playerCopy);
-            //MessageLog(json);
         }
     }
 }
