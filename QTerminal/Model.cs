@@ -20,7 +20,7 @@ namespace testDotNet
     {
         public string Name { get; set; }
         public string Id { get; set; }
-        public List<string[]> StudentAnswer = new List<string[]>();
+        public string StudentAnswer { get; set; }
     }
 
     class Model
