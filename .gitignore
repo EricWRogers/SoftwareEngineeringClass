@@ -12,6 +12,3 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
-
-#
-*.csproj
