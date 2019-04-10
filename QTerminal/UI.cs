@@ -11,25 +11,28 @@ namespace testDotNet
     class UI
     {
          static void Main(string[] args)
-        {
-            Application.Init();
-            var top = Application.Top;
+         {
+            Application.Init ();
+            var menu = new MenuBar (new MenuBarItem [] {
+                new MenuBarItem ("_File", new MenuItem [] {
+                    new MenuItem ("_Quit", "", () => { 
+                        Application.RequestStop (); 
+                    })
+                }),
+            });
 
-            var win = new Window ("MyApp") 
-            {
+            var win = new Window ("Hello") {
                 X = 0,
-                Y = 1, // Leave one row for the toplevel menu
-                // By using Dim.Fill(), it will automatically resize without manual intervention
+                Y = 1,
                 Width = Dim.Fill (),
-	            Height = Dim.Fill ()
+                Height = Dim.Fill () - 1
             };
-            top.Add(win);
 
-
+            // Add both menu and win in a single call
+            Application.Top.Add (menu, win);
             Application.Run ();
-
-        }
     }
-
-
 }
+}
+
+
