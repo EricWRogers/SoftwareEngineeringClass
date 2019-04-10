@@ -98,7 +98,7 @@ namespace testDotNet
             }
         }
         #endregion
-
+/* 
         static void Main(string[] args)
         {
             // Set Dev Mode
@@ -142,6 +142,6 @@ namespace testDotNet
                 string[] lines = File.ReadAllLines(@t);
                 MessageLog(lines[0]);
             }
-        }
+        }*/
     }
 }
