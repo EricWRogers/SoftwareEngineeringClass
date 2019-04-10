@@ -25,7 +25,7 @@ namespace testDotNet
             bool teacherPressed = false;
             var student = new Button(7,14,"Student")
             {
-                Clicked = () => {   studentPressed = true;  }
+                Clicked = () => {   studentPressed = true; }
             };
             var teacher = new Button(7,14,"Teacher")
             {
@@ -33,21 +33,22 @@ namespace testDotNet
             };
             var dialog = new Dialog("Selection", 60, 7, student, teacher);
             win.Add(dialog);
+            //var testView = new ListView(new Rect(4, 8, top.Frame.Width, 200), MovieDataSource.GetList(forKidsOnly.Checked, 0).ToList());
+            //var testView = new ListView(new Rect(4, 8, top.Frame.Width, 200), MovieDataSource.GetList(forKidsOnly.Checked, 0).ToList());
 
 
             if(studentPressed)
             {
             win.Remove(dialog);
-            win.Add();
-
-
+            win.Redraw(mainRect);
+            //win.Add();
             }
 
             if(teacherPressed)
             {
             win.Remove(dialog);
-             win.Add();
-
+            win.Redraw(mainRect);
+            //win.Add();
             }
              Application.Run ();
         }
