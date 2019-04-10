@@ -10,29 +10,36 @@ namespace testDotNet
 {
     class UI
     {
-         static void Main(string[] args)
-         {
+                        
+    
+        static void Main(string[] args)
+        {
+            //initialize the application
             Application.Init ();
-            var menu = new MenuBar (new MenuBarItem [] {
-                new MenuBarItem ("_File", new MenuItem [] {
-                    new MenuItem ("_Quit", "", () => { 
-                        Application.RequestStop (); 
-                    })
-                }),
-            });
+            var top = Application.Top;
 
-            var win = new Window ("Hello") {
-                X = 0,
-                Y = 1,
-                Width = Dim.Fill (),
-                Height = Dim.Fill () - 1
+            var win = new Window(new Rect(0,1,top.Frame.Width,top.Frame.Height-1),"Class Test Application");
+            top.Add(win);
+
+            bool studentPressed = false;
+            bool teacherPressed = false;
+            var student = new Button(7,14,"Student")
+            {
+                Clicked = () => { new Window(new Rect(0,1,top.Frame.Width,top.Frame.Height-1),"test");  studentPressed = true; }
             };
+            var teacher = new Button(7,14,"Teacher")
+            {
+                Clicked = () => { win.Clear();  teacherPressed = true; }
+            };
+            var dialog = new Dialog("Selection", 60, 7, student, teacher);
+            win.Add(dialog);
 
-            // Add both menu and win in a single call
-            Application.Top.Add (menu, win);
-            Application.Run ();
+
+             Application.Run ();
+             Console.WriteLine("Student"+studentPressed);
+             Console.WriteLine("Teacher"+teacherPressed);
+        }
     }
-}
 }
 
 

@@ -90,7 +90,7 @@ namespace testDotNet
                 return false;
             }
         }
-        private static void MessageLog( string Message)
+        public static void MessageLog( string Message)
         {
             if(devMode)
             {
