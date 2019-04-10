@@ -10,7 +10,7 @@ namespace testDotNet
 {
     class UI
     {
-        static void main()
+         static void Main(string[] args)
         {
             Application.Init();
             var top = Application.Top;
@@ -23,10 +23,10 @@ namespace testDotNet
                 Width = Dim.Fill (),
 	            Height = Dim.Fill ()
             };
+            top.Add(win);
 
 
-
-
+            Application.Run ();
 
         }
     }
