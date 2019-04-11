@@ -10,33 +10,124 @@ namespace testDotNet
 {
     class UI
     {
-                        
-    
+
+
         static void Main(string[] args)
         {
             //initialize the application
-            Application.Init ();
+            Application.Init();
             var top = Application.Top;
-            Rect mainRect =  new Rect(0,1,top.Frame.Width,top.Frame.Height-1);
-            var win = new Window(mainRect,"Class Test Application");
-            top.Add(win);
+            Rect mainRect = new Rect(0, 1, top.Frame.Width, top.Frame.Height - 1);
+            var mainWin = new Window(mainRect, "Class Test Application");
+            var studentWin = new Window(mainRect, "Test Selection");
+            var studentTakeWin = new Window(mainRect, "Test");
+            var teacherWin = new Window(mainRect, "Test Creation");
+            top.Add(mainWin);
             
-            var student = new Button(7,14,"Student");
-            var teacher = new Button(7,14,"Teacher");
+
+            var student = new Button(7, 14, "Student");
+            var teacher = new Button(7, 14, "Teacher");
             var dialog = new Dialog("Selection", 60, 7, student, teacher);
 
-            win.Add(dialog);
+            mainWin.Add(dialog);
+            
             //var testView = new ListView(new Rect(4, 8, top.Frame.Width, 200), MovieDataSource.GetList(forKidsOnly.Checked, 0).ToList());
-             student.Clicked = () =>
-             {
-                win.Remove(dialog);
-                win.Redraw(mainRect);
+
+
+
+            student.Clicked = () =>
+            {
+                top.Remove(mainWin);
+                top.Add(studentWin);
+                //load tests available;
+
+                string dirName = "./Test";
+                string extension = "test";
+                string chosenTest;
+                string[] testFileNames = Model.LoadAvailableTest(dirName, extension);
+
+                int i = 0;
+                foreach (String test in testFileNames)
+                {
+                    string testName = test.Substring(dirName.Length + 1, test.Length - dirName.Length - extension.Length - 2);
+                    // Console.WriteLine(testName);
+                    Button button = new Button(5, 2 + (i * 2), testName);
+                    
+                    button.Clicked += () =>
+                    {
+                        
+                        string jsonData = File.ReadAllText(test);
+                        Test testObj = JsonConvert.DeserializeObject<Test>(jsonData);
+                        chosenTest = testObj.TestName;
+                        
+                        
+                        int j = 0;
+                        foreach (string qsn in testObj.Question)
+                        {
+                            Label label = new Label(5, 10 + (j * 2), qsn);
+
+                            studentWin.Add(label);
+                            j++;
+                        }
+                    };
+                    studentWin.Add(button);
+
+                    i++;
+                }
+
+                //get the name of each test returned in a string;
+                //
+
+
+
+
                 //win.Add(testView);
 
 
-             };
-        
-             Application.Run ();
+            };
+            teacher.Clicked = () =>
+            {
+                top.Remove(mainWin);
+                top.Add(teacherWin);
+                //load tests available;
+
+                string dirName = "./Test";
+                string extension = "test";
+                string chosenTest;
+                string[] testFileNames = Model.LoadAvailableTest(dirName, extension);
+
+                int i = 0;
+                foreach (String test in testFileNames)
+                {
+                    string testName = test.Substring(dirName.Length + 1, test.Length - dirName.Length - extension.Length - 2);
+                    // Console.WriteLine(testName);
+                    Button button = new Button(5, 2 + (i * 2), testName);
+
+                    button.Clicked += () =>
+                    {
+
+                        string jsonData = File.ReadAllText(test);
+                        Test testObj = JsonConvert.DeserializeObject<Test>(jsonData);
+                        chosenTest = testObj.TestName;
+
+
+                        int j = 0;
+                        foreach (string qsn in testObj.Question)
+                        {
+                            Label label = new Label(5, 10 + (j * 2), qsn);
+
+                            teacherWin.Add(label);
+                            j++;
+                        }
+                    };
+                    teacherWin.Add(button);
+
+                    i++;
+                }
+            };
+
+
+            Application.Run();
         }
     }
 }

@@ -15,6 +15,9 @@ namespace testDotNet
         public string TestName { get; set; }
         public List<string> Question = new List<string>();
         public List<string[]> Answer = new List<string[]>();
+
+        // Add QuestionType, Options(such as multiple choice, true or false, etc)?
+        
     }
     class StudentsTest : Test
     {
