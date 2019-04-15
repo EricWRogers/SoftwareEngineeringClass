@@ -31,7 +31,7 @@ namespace testDotNet
         }
         public int HowManyQuestions()
         {
-            return Questions.Count();
+            return Questions.Count;
         }
         public Question GetQuestionByLocation(int location)
         {
@@ -80,7 +80,7 @@ namespace testDotNet
                 return TestPack;
             }
         }
-        public static void SaveTest ( Test test, string file)
+        /* public static void SaveTest ( Test test, string file)
         {
             try
             {
@@ -92,11 +92,12 @@ namespace testDotNet
                 Console.WriteLine("The process failed: {0}", e.ToString());
                 Console.WriteLine("Error saving test");
             }
-        }
+        }*/
         public static void SaveTest ( Test test, string dir, string fileName, string fileEx)
         {
             try
             {
+                test.TestName = fileName;
                 string json = JsonConvert.SerializeObject(test);
                 System.IO.File.WriteAllText(dir + "/" + fileName + "." + fileEx, json);
             }
@@ -128,8 +129,6 @@ namespace testDotNet
             }
         }
         #endregion
-        
-
         static void Main(string[] args)
         {
             // Set Dev Mode
