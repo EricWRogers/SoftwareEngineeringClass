@@ -1,1 +1,1 @@
-{"Question":["How heigh is tall?"],"Answer":[["Very tall"]],"key":"Eric","TestName":"SE_Test_01"}
+{"Questions":[{"Test_Question":"How height is tall","Q_Type":0,"Answer":["true","false"],"C_Answers":[1,0]},{"Test_Question":"How height is tall","Q_Type":1,"Answer":["very tall"],"C_Answers":null},{"Test_Question":"How height is tall","Q_Type":2,"Answer":["very tall","very much tall"],"C_Answers":[1,0]}],"STest":{"Name":null,"Id":null,"StudentAnswer":null},"key":"Eric","TestName":"SE_Test_01"}

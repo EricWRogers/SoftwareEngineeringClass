@@ -13,19 +13,46 @@ namespace testDotNet
     {
         public string key { get; set; }
         public string TestName { get; set; }
-        public List<string> Question = new List<string>();
-        public List<string[]> Answer = new List<string[]>();
-
-        // Add QuestionType, Options(such as multiple choice, true or false, etc)?
-        
+        public List<Question> Questions = new List<Question>();
+        public StudentsTest STest = new StudentsTest();
+        #region QuestionHelper
+        public void AddQuestionTF( string question, bool answer )
+        {
+            if(answer) { Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {1,0}}); }
+            else { Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {0,1}}) ; }
+        }
+        public void AddQuestionShort( string question, string answer)
+        {
+            Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.ShortAnswer, Answer = new string[] { answer } });
+        }
+        public void AddQuestionMulti( string question, string[] answer, int[] correct )
+        {
+            Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoise, Answer = answer, C_Answers = correct});
+        }
+        public int HowManyQuestions()
+        {
+            return Questions.Count();
+        }
+        public Question GetQuestionByLocation(int location)
+        {
+            return Questions[location];
+        }
+        #endregion
     }
-    class StudentsTest : Test
+    class StudentsTest
     {
         public string Name { get; set; }
         public string Id { get; set; }
         public string StudentAnswer { get; set; }
     }
-
+    class Question
+    {
+        public string Test_Question { get; set; }
+        public QTYPE Q_Type { get; set; }
+        public string[] Answer { get; set; }
+        public int[] C_Answers { get; set; }
+    }
+    enum QTYPE { TF, ShortAnswer, MultiChoise };
     class Model
     {
         #region ModelValue
@@ -101,7 +128,8 @@ namespace testDotNet
             }
         }
         #endregion
-/* 
+        
+
         static void Main(string[] args)
         {
             // Set Dev Mode
@@ -122,11 +150,12 @@ namespace testDotNet
             Test test = new Test();
             test.key = "Eric";
             test.TestName = "SE_Test_01";
-            test.Question.Add("How heigh is tall?");
-            test.Answer.Add(new string[] {"Very tall"});
+            test.AddQuestionTF( "How height is tall", true );
+            test.AddQuestionShort( "How height is tall", "very tall");
+            test.AddQuestionMulti( "How height is tall", new string[]{"very tall", "very much tall"}, new int[]{1,0});
 
             // Convert test object into json string
-            string json = JsonConvert.SerializeObject(test);
+            string json = JsonConvert.SerializeObject( test );
 
             // Printing json string
             MessageLog(json);
@@ -145,6 +174,6 @@ namespace testDotNet
                 string[] lines = File.ReadAllLines(@t);
                 MessageLog(lines[0]);
             }
-        }*/
+        }//*/
     }
 }

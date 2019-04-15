@@ -11,7 +11,7 @@ namespace testDotNet
     class UI
     {
 
-
+        /* 
         static void Main(string[] args)
         {
             //initialize the application
@@ -128,7 +128,7 @@ namespace testDotNet
 
 
             Application.Run();
-        }
+        }*/
     }
 }
 
