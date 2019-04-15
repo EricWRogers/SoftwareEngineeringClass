@@ -11,7 +11,7 @@ namespace testDotNet
     class UI
     {
 
-        /* 
+        
         static void Main(string[] args)
         {
             //initialize the application
@@ -23,10 +23,13 @@ namespace testDotNet
             var studentTakeWin = new Window(mainRect, "Test");
             var teacherWin = new Window(mainRect, "Test Creation");
             top.Add(mainWin);
-            
-
+           
+            var nameStudent = new Label (3, 2, "Student Name: ");
+            var nameStudentTxt = new TextField (17, 2, 40, "");
             var student = new Button(7, 14, "Student");
             var teacher = new Button(7, 14, "Teacher");
+            String buttonString = "Next";
+            var nextScn = new Button(80, 10, buttonString);
             var dialog = new Dialog("Selection", 60, 7, student, teacher);
 
             mainWin.Add(dialog);
@@ -59,16 +62,28 @@ namespace testDotNet
                         string jsonData = File.ReadAllText(test);
                         Test testObj = JsonConvert.DeserializeObject<Test>(jsonData);
                         chosenTest = testObj.TestName;
-                        
-                        
-                        int j = 0;
-                        foreach (string qsn in testObj.Question)
+                           
+                        studentWin.RemoveAll();
+                        studentWin.Add(nameStudent,nameStudentTxt,nextScn);
+
+                        nextScn.Clicked += () => 
+                        {
+
+                        if(!string.IsNullOrEmpty(nameStudentTxt.Text.ToString()))
+                        {
+                            //funciton to save students name to folder
+                        }
+                            studentWin.RemoveAll();
+                        };
+                        //Funtion to display the funcitons
+                        /* 
+                        foreach (string qsn in testObj.Questions)
                         {
                             Label label = new Label(5, 10 + (j * 2), qsn);
 
                             studentWin.Add(label);
                             j++;
-                        }
+                        }*/
                     };
                     studentWin.Add(button);
 
@@ -76,7 +91,7 @@ namespace testDotNet
                 }
 
                 //get the name of each test returned in a string;
-                //
+                
 
 
 
@@ -111,14 +126,15 @@ namespace testDotNet
                         chosenTest = testObj.TestName;
 
 
-                        int j = 0;
-                        foreach (string qsn in testObj.Question)
+                        
+                        /* 
+                        foreach (string qsn in testObj.Questions)
                         {
                             Label label = new Label(5, 10 + (j * 2), qsn);
 
                             teacherWin.Add(label);
                             j++;
-                        }
+                        }*/
                     };
                     teacherWin.Add(button);
 
@@ -128,7 +144,7 @@ namespace testDotNet
 
 
             Application.Run();
-        }*/
+        }
     }
 }
 
