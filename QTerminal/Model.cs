@@ -37,7 +37,7 @@ namespace testDotNet
 
                 }
             }
-            return new Grade;
+            return new Grade();
         }
         #region QuestionHelper
         public void AddQuestionTF( string question, bool answer )

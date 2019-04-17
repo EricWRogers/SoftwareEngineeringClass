@@ -10,21 +10,21 @@ namespace testDotNet
 {
     class UI
     {
-        void Init()
+        public static void Init()
         {
             Console.WriteLine("Welcome to the Testing Center");
         }
 
         void CheckResponceStart(string response)
         {
-            if(response != "Strudent" || response != "Admin")
+            if(response != "Student" || response != "Admin")
             {
 
             }
         }
         static void Main(string[] args)
         {
-
+            Init();
         }
     }
 }
