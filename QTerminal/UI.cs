@@ -27,14 +27,32 @@ namespace testDotNet
         }
         static void ChooseTest()
         {   
+            bool temp = true;
+            int response;
+
             //get the tests 
-           string[] testNames = Model.LoadTestNames(Model.LoadAvailableTest("./Test", "test"),"./Test", "test");
+            string[] testNames = Model.LoadTestNames(Model.LoadAvailableTest("./Test", "test"),"./Test", "test");
+
             //display the test
             for(int i = 0; i < testNames.Length;i++)
             {
-            Console.WriteLine(i + ": " + testNames[i]);
+                Console.WriteLine(i + ": " + testNames[i]);
             }
+
             //let user choose the test
+            response = Convert.ToInt32(Console.ReadLine());
+
+            while(temp)
+            {
+                if(response >= 0 && response < testNames.Length)
+                {
+                    temp = false;
+                }
+                else
+                {
+                    Console.WriteLine("Not A Valid Chouse. Please Try Again");
+                }
+            }
         }
         static string CheckResponce(string Question, string possible1, string possible2)
         {
@@ -67,7 +85,30 @@ namespace testDotNet
         }
         static void Main(string[] args)
         {
-            CheckResponce("Welcome to the Testing Center\nAre You a Student or Administrator", "Student", "Admin");
+            //CheckResponce("Welcome to the Testing Center\nAre You a Student or Administrator", "Student", "Admin");
+
+            Console.WriteLine("Welcome to the Testing Center");
+            Console.WriteLine("Are You a Student or Administrator");
+            string response = Console.ReadLine();
+            switch(response)
+            {
+                case "Student":
+                ChooseTest();
+                TakeTest();
+
+                    break;
+
+                case "Administrator":
+                ChooseTest();
+                TestChange();
+
+                    break;
+
+                default:
+
+                Console.WriteLine("Error: Not a valid choice please try again!");
+                    break;
+            }
         }
     }
 }
