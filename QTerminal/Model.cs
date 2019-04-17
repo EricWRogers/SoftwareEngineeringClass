@@ -31,25 +31,25 @@ namespace testDotNet
         }
         public void OverWriteQuestionTF( int location, string question, bool answer )
         {
-            if(answer) { Questions[location]( new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {1,0}}); }
-            else { Questions[location]( new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {0,1}}) ; }
+            if(answer) { Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {1,0}}; }
+            else { Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {0,1}} ; }
         }
         public void OverWriteQuestionShort( int location, string question, string answer)
         {
-            Questions[location]( new Question{ Test_Question = question, Q_Type = QTYPE.ShortAnswer, Answer = new string[] { answer } });
+            Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.ShortAnswer, Answer = new string[] { answer } };
         }
         public void OverWriteQuestionMulti( int location, string question, string[] answer, int[] correct )
         {
-            Questions[location]( new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoise, Answer = answer, C_Answers = correct});
+            Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoise, Answer = answer, C_Answers = correct};
         }
         public int HowManyQuestions()
         {
             return Questions.Count;
         }
         public Question GetQuestionByLocation(int location)
-            {
-                return Questions[location];
-            }
+        {
+            return Questions[location];
+        }
         #endregion
     }
     class StudentsTest
