@@ -36,9 +36,10 @@ namespace testDotNet
             }
             //let user choose the test
         }
-        string CheckResponce(string Question, string response, string possible1, string possible2)
+        static string CheckResponce(string Question, string possible1, string possible2)
         {
             bool temp = true;
+            string response;
             string responseHolder = "";
 
             while(temp)
@@ -66,32 +67,7 @@ namespace testDotNet
         }
         static void Main(string[] args)
         {
-            Console.WriteLine("Welcome to the Testing Center");
-            Console.WriteLine("Are You a Student or Administrator");
-            string response = Console.ReadLine();
-            switch(response)
-            {
-                case "student":
-                ChooseTest();
-                TakeTest();
-
-                    break;
-
-                case "Administrator":
-                ChooseTest();
-                TestChange();
-
-                    break;
-
-                default:
-
-                Console.WriteLine("Error: Not a valid choice please try again!");
-                    break;
-            }
-
-
-
-
+            CheckResponce("Welcome to the Testing Center\nAre You a Student or Administrator", "Student", "Admin");
         }
     }
 }
