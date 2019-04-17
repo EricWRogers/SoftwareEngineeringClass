@@ -32,7 +32,7 @@ namespace testDotNet
             //display the test
             for(int i = 0; i < testNames.Length;i++)
             {
-            Console.WriteLine(i + ": " + testNames);
+            Console.WriteLine(i + ": " + testNames[i]);
             }
             //let user choose the test
         }
@@ -71,7 +71,7 @@ namespace testDotNet
             string response = Console.ReadLine();
             switch(response)
             {
-                case "student":
+                case "Student":
                 ChooseTest();
                 TakeTest();
 
