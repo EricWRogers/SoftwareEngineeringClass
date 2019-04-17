@@ -31,6 +31,33 @@ namespace testDotNet
             //let user choose the test
         }
 
+        string CheckResponce(string Question, string response, string possible1, string possible2)
+        {
+            bool temp = true;
+            string responseHolder = "";
+
+            while(temp)
+            {
+                Console.WriteLine(Question);
+                response = Console.ReadLine();
+
+                if(String.Equals(response , possible1, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    responseHolder = possible1;
+                }
+                else if(String.Equals(response , possible2, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    responseHolder = possible2;
+                }
+                else
+                {
+                    Console.WriteLine("Not A Valid Chouse. Please Try Again");
+                }
+            }
+
+            return responseHolder;
+        }
+
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to the Testing Center");
@@ -54,10 +81,6 @@ namespace testDotNet
                 Console.WriteLine("Error: Not a valid choice please try again!");
                     break;
             }
-
-
-
-
         }
     }
 }
