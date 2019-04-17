@@ -8,13 +8,37 @@ using System.Runtime.Serialization;
 
 namespace testDotNet
 {
-
     class Test
     {
         public string key { get; set; }
         public string TestName { get; set; }
         public List<Question> Questions = new List<Question>();
         public StudentsTest STest = new StudentsTest();
+        public Grade GradeTest( QTYPE qType )
+        {
+            int correct = 0;
+            int wrong = 0;
+            for(int q = 0; q < Questions.Count; q++)
+            {
+                switch( qType )
+                {
+                    case QTYPE.TF:
+
+                        break;
+                    case QTYPE.ShortAnswer:
+
+                        break;
+                    case QTYPE.MultiChoise:
+
+                        break;
+                }
+                if(true)
+                {
+
+                }
+            }
+            return new Grade;
+        }
         #region QuestionHelper
         public void AddQuestionTF( string question, bool answer )
         {
@@ -50,13 +74,39 @@ namespace testDotNet
         {
             return Questions[location];
         }
+        public void AddAnswerTF( string question, bool answer )
+        {
+            if(answer) { Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {1,0}}); }
+            else { Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {0,1}}) ; }
+        }
+        public void AddAnswerShort( string question, string answer)
+        {
+            Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.ShortAnswer, Answer = new string[] { answer } });
+        }
+        public void AddAnswerMulti( string question, string[] answer, int[] correct )
+        {
+            Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoise, Answer = answer, C_Answers = correct});
+        }
+        public void OverWriteAnswerTF( int location, string question, bool answer )
+        {
+            if(answer) { Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {1,0}}; }
+            else { Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.TF, Answer = new string[] { "true", "false" } , C_Answers = new int[] {0,1}} ; }
+        }
+        public void OverWriteAnswerShort( int location, string question, string answer)
+        {
+            Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.ShortAnswer, Answer = new string[] { answer } };
+        }
+        public void OverWriteAnswerMulti( int location, string question, string[] answer, int[] correct )
+        {
+            Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoise, Answer = answer, C_Answers = correct};
+        }
         #endregion
     }
     class StudentsTest
     {
         public string Name { get; set; }
         public string Id { get; set; }
-        public string StudentAnswer { get; set; }
+        public string[] StudentAnswer { get; set; }
     }
     class Question
     {
@@ -64,6 +114,14 @@ namespace testDotNet
         public QTYPE Q_Type { get; set; }
         public string[] Answer { get; set; }
         public int[] C_Answers { get; set; }
+    }
+    class Grade{
+        public int TF_Correct { get; set; }
+        public int TF_Wrong { get; set; }
+        public int ShortAnswer_Correct { get; set; }
+        public int ShortAnswer_Wrong { get; set; }
+        public int MultiChoise_Correct { get; set; }
+        public int MultiChoise_Wrong  { get; set; }
     }
     enum QTYPE { TF, ShortAnswer, MultiChoise };
     class Model
@@ -119,6 +177,15 @@ namespace testDotNet
                 Console.WriteLine("The process failed: {0}", e.ToString());
                 Console.WriteLine("Error saving test");
             }
+        }
+        public static string[] LoadTestNames(string[] testFileNames, string dirName, string extension)
+        {
+            string[] newFileNames = testFileNames;
+            for (int i = 0; i < testFileNames.Length;i++)
+            {
+                newFileNames[i] = testFileNames[i].Substring(dirName.Length + 1, testFileNames[i].Length - dirName.Length - extension.Length - 2);
+            }
+            return newFileNames;
         }
         private static bool makeFolder( string FolderName)
         {
