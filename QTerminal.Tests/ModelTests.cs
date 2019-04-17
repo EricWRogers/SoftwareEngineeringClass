@@ -7,7 +7,7 @@ namespace QTerminal.Tests
     public class ModelTests
     {
         [Fact]
-        public void LoadAvailableTest_UnitTesting()
+        public void LoadAvailableTest_ShouldNotBeNull()
         {
             
         }
