@@ -10,23 +10,57 @@ namespace testDotNet
 {
     class UI
     {
-        public static void Init()
+
+        //initialize the application
+        static void TakeTest()
         {
-            Console.WriteLine("Welcome to the Testing Center");
+            //get the test the user selected and display one question at a time
+            //press enter to move to next question
+           
+        }
+        static void TestChange()
+        {
+            //get the test the user selected and display one question at a time 
+            //press enter to move to next question
+           
+        }
+        static void ChooseTest()
+        {
+            //get the tests 
+            //display the test
+            //let user choose the test
         }
 
-        void CheckResponceStart(string response)
-        {
-            if(response != "Student" || response != "Admin")
-            {
-
-            }
-        }
         static void Main(string[] args)
         {
-            Init();
+            Console.WriteLine("Welcome to the Testing Center");
+            Console.WriteLine("Are You a Student or Administrator");
+            string response = Console.ReadLine();
+            switch(response)
+            {
+                case "student":
+                ChooseTest();
+                TakeTest();
+
+                    break;
+
+                case "Administrator":
+                ChooseTest();
+                TestChange();
+                    break;
+
+                default:
+
+                Console.WriteLine("Error: Not a valid choice please try again!");
+                    break;
+            }
+
+
+
+
         }
     }
 }
+
 
 
