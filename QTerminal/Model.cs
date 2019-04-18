@@ -153,7 +153,7 @@ namespace testDotNet
         }
         public static Test LoadTest( string json )
         {
-            return JsonConvert.DeserializeObject<Test>(json);
+            return JsonConvert.DeserializeObject<Test>( json );
         } 
         /* public static void SaveTest ( Test test, string file)
         {

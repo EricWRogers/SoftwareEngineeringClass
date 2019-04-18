@@ -12,7 +12,7 @@ namespace testDotNet
     class UI
     {
        
-        public Test test;
+        public static Test test;
         //initialize the application
         static void TakeTest()
         {
@@ -27,14 +27,14 @@ namespace testDotNet
             //press enter to move to next question
            
         }
-        static void ChooseTest()
+        static void ChooseTest( string folder, string extinction )
         {   
             bool temp = true;
             int response;
 
             //get the tests 
-            string[] testPath = Model.LoadAvailableTest("./Test", "test");
-            string[] testNames = Model.LoadTestNames(testPath,"./Test", "test");
+            string[] testPath = Model.LoadAvailableTest(folder, extinction);
+            string[] testNames = Model.LoadTestNames(testPath,folder, extinction);
 
             //display the test
             for(int i = 0; i < testNames.Length;i++)
@@ -59,7 +59,7 @@ namespace testDotNet
                 }
             }
 
-            string[] lines = File.ReadAllLines(testPath[response]);
+            string[] lines = File.ReadAllLines( folder+ "/" + testNames[response] + "." + extinction);
             test = Model.LoadTest(lines[0]);
         }
         static string CheckResponce(string Question, string possible1, string possible2)
@@ -101,13 +101,13 @@ namespace testDotNet
             switch(response)
             {
                 case "Student":
-                ChooseTest();
+                ChooseTest("./Test", "test");
                 TakeTest();
 
                     break;
 
                 case "Administrator":
-                ChooseTest();
+                ChooseTest("./StudentAnswer", "testAnswer");
                 TestChange();
 
                     break;
