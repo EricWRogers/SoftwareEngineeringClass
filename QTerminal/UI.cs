@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using Terminal.Gui;
 
 
-namespace testDotNet
+namespace QTerminal
 {
     class UI
     {
