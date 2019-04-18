@@ -58,6 +58,9 @@ namespace testDotNet
                     Console.WriteLine("Not A Valid Choice. Please Try Again");
                 }
             }
+
+            string[] lines = File.ReadAllLines(testPath[response]);
+            test = Model.LoadTest(lines[0]);
         }
         static string CheckResponce(string Question, string possible1, string possible2)
         {
