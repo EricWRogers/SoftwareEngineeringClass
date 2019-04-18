@@ -16,8 +16,10 @@ namespace testDotNet
         //initialize the application
         static void TakeTest()
         {
+            test.STest = new StudentsTest();
+            string holder = "";
             //get the test the user selected and display one question at a time
-            for(int i = 1; i < test.HowManyQuestions();i++)
+            for(int i = 0; i < test.HowManyQuestions();i++)
             {
                 switch(test.Questions[i].Q_Type)
                 {
@@ -25,22 +27,28 @@ namespace testDotNet
                         Console.WriteLine(test.Questions[i].Test_Question);
                         for(int t = 0; t < test.Questions[i].Answer.Length;t++)
                         {
-                        Console.WriteLine("question #"+ i +":" +test.Questions[i].Answer[t]);
+                            Console.WriteLine("MC question #"+ t +":" +test.Questions[i].Answer[t]);
                         }
                         test.STest.StudentAnswer.Add(test.Questions[i].Answer[Convert.ToInt32(Console.ReadLine())] );
                        
                         break;
 
                     case QTYPE.ShortAnswer:
-                        Console.WriteLine("question #"+ i +":" +test.Questions[i].Test_Question);
-                        string holder = Console.ReadLine();
+                        Console.WriteLine("SA question #"+ i +":" +test.Questions[i].Test_Question);
+                        holder = Console.ReadLine();
                         test.STest.StudentAnswer.Add(holder);
                         break;
 
                     case QTYPE.TF:
-                        Console.WriteLine("question #"+ i +":" +test.Questions[i].Test_Question);
-                        Console.WriteLine(test.Questions[i].Answer);
-                        test.STest.StudentAnswer.Add(test.Questions[i].Answer[Convert.ToInt32(Console.ReadLine())] );
+                        Console.WriteLine("TF question #"+ i +":" +test.Questions[i].Test_Question);
+                        for(int t = 0; t < test.Questions[i].Answer.Length;t++)
+                        {
+                            Console.WriteLine(t + ": " + test.Questions[i].Answer[t]);
+                        }
+                        holder = "";
+                        holder = Console.ReadLine();
+                        int dfasdf = Convert.ToInt32(holder);
+                        test.STest.StudentAnswer.Add(test.Questions[i].Answer[dfasdf] );
                         break;
 
 

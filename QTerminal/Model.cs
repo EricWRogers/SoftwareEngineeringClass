@@ -123,13 +123,9 @@ namespace testDotNet
         public int MultiChoice_Correct { get; set; }
         public int MultiChoice_Wrong  { get; set; }
     }
-<<<<<<< HEAD
-    enum QTYPE { TF, ShortAnswer, MultiChoice };
-    class Model
-=======
-    public enum QTYPE { TF, ShortAnswer, MultiChoise };
+
+    public enum QTYPE { TF, ShortAnswer, MultiChoice };
     public class Model
->>>>>>> master
     {
         #region ModelValue
         private static bool devMode = false;
