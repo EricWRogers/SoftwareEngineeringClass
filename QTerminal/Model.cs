@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 
-namespace testDotNet
+namespace QTerminal
 {
     public class Test
     {
