@@ -11,11 +11,13 @@ namespace testDotNet
 {
     class UI
     {
+       
         public Test test;
         //initialize the application
         static void TakeTest()
         {
             //get the test the user selected and display one question at a time
+
             //press enter to move to next question
            
         }
@@ -31,7 +33,8 @@ namespace testDotNet
             int response;
 
             //get the tests 
-            string[] testNames = Model.LoadTestNames(Model.LoadAvailableTest("./Test", "test"),"./Test", "test");
+            string[] testPath = Model.LoadAvailableTest("./Test", "test");
+            string[] testNames = Model.LoadTestNames(testPath,"./Test", "test");
 
             //display the test
             for(int i = 0; i < testNames.Length;i++)
@@ -41,6 +44,8 @@ namespace testDotNet
 
             //let user choose the test
             response = Convert.ToInt32(Console.ReadLine());
+            
+
 
             while(temp)
             {
@@ -50,7 +55,7 @@ namespace testDotNet
                 }
                 else
                 {
-                    Console.WriteLine("Not A Valid Chouse. Please Try Again");
+                    Console.WriteLine("Not A Valid Choice. Please Try Again");
                 }
             }
         }
@@ -77,7 +82,7 @@ namespace testDotNet
                 }
                 else
                 {
-                    Console.WriteLine("Not A Valid Chouse. Please Try Again");
+                    Console.WriteLine("Not A Valid Choise. Please Try Again");
                 }
             }
 
