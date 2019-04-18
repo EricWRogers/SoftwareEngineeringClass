@@ -16,8 +16,17 @@ namespace QTerminal
         //initialize the application
         static void TakeTest()
         {
+         
             test.STest = new StudentsTest();
             string holder = "";
+
+            //Student id
+            Console.WriteLine("Student Name");
+            test.STest.Name = Console.ReadLine();
+            Console.WriteLine("Student ID");
+            test.STest.Id = Console.ReadLine();
+            
+
             //get the test the user selected and display one question at a time
             for(int i = 0; i < test.HowManyQuestions();i++)
             {
@@ -51,11 +60,12 @@ namespace QTerminal
                         test.STest.StudentAnswer.Add(test.Questions[i].Answer[dfasdf] );
                         break;
 
-
                 }
- 
+
                
             }
+            //save the test
+            Model.SaveTest(test,"./StudentAnswer",test.TestName+test.STest.Name,"testAnswer");
             //press enter to move to next question
            
         }
