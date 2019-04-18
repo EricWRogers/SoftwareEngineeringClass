@@ -28,7 +28,7 @@ namespace testDotNet
                     case QTYPE.ShortAnswer:
 
                         break;
-                    case QTYPE.MultiChoise:
+                    case QTYPE.MultiChoice:
 
                         break;
                 }
@@ -51,7 +51,7 @@ namespace testDotNet
         }
         public void AddQuestionMulti( string question, string[] answer, int[] correct )
         {
-            Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoise, Answer = answer, C_Answers = correct});
+            Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoice, Answer = answer, C_Answers = correct});
         }
         public void OverWriteQuestionTF( int location, string question, bool answer )
         {
@@ -64,7 +64,7 @@ namespace testDotNet
         }
         public void OverWriteQuestionMulti( int location, string question, string[] answer, int[] correct )
         {
-            Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoise, Answer = answer, C_Answers = correct};
+            Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoice, Answer = answer, C_Answers = correct};
         }
         public int HowManyQuestions()
         {
@@ -85,7 +85,7 @@ namespace testDotNet
         }
         public void AddAnswerMulti( string question, string[] answer, int[] correct )
         {
-            Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoise, Answer = answer, C_Answers = correct});
+            Questions.Add( new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoice, Answer = answer, C_Answers = correct});
         }
         public void OverWriteAnswerTF( int location, string question, bool answer )
         {
@@ -98,7 +98,7 @@ namespace testDotNet
         }
         public void OverWriteAnswerMulti( int location, string question, string[] answer, int[] correct )
         {
-            Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoise, Answer = answer, C_Answers = correct};
+            Questions[location] = new Question{ Test_Question = question, Q_Type = QTYPE.MultiChoice, Answer = answer, C_Answers = correct};
         }
         #endregion
     }
@@ -106,7 +106,7 @@ namespace testDotNet
     {
         public string Name { get; set; }
         public string Id { get; set; }
-        public string[] StudentAnswer { get; set; }
+        public List<string> StudentAnswer = new List<string>();
     }
     class Question
     {
@@ -120,10 +120,10 @@ namespace testDotNet
         public int TF_Wrong { get; set; }
         public int ShortAnswer_Correct { get; set; }
         public int ShortAnswer_Wrong { get; set; }
-        public int MultiChoise_Correct { get; set; }
-        public int MultiChoise_Wrong  { get; set; }
+        public int MultiChoice_Correct { get; set; }
+        public int MultiChoice_Wrong  { get; set; }
     }
-    enum QTYPE { TF, ShortAnswer, MultiChoise };
+    enum QTYPE { TF, ShortAnswer, MultiChoice };
     class Model
     {
         #region ModelValue

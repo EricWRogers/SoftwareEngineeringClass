@@ -17,7 +17,37 @@ namespace testDotNet
         static void TakeTest()
         {
             //get the test the user selected and display one question at a time
+            for(int i = 1; i < test.HowManyQuestions();i++)
+            {
+                switch(test.Questions[i].Q_Type)
+                {
+                    case QTYPE.MultiChoice:
+                        Console.WriteLine(test.Questions[i].Test_Question);
+                        for(int t = 0; t < test.Questions[i].Answer.Length;t++)
+                        {
+                        Console.WriteLine("question #"+ i +":" +test.Questions[i].Answer[t]);
+                        }
+                        test.STest.StudentAnswer.Add(test.Questions[i].Answer[Convert.ToInt32(Console.ReadLine())] );
+                       
+                        break;
 
+                    case QTYPE.ShortAnswer:
+                        Console.WriteLine("question #"+ i +":" +test.Questions[i].Test_Question);
+                        string holder = Console.ReadLine();
+                        test.STest.StudentAnswer.Add(holder);
+                        break;
+
+                    case QTYPE.TF:
+                        Console.WriteLine("question #"+ i +":" +test.Questions[i].Test_Question);
+                        Console.WriteLine(test.Questions[i].Answer);
+                        test.STest.StudentAnswer.Add(test.Questions[i].Answer[Convert.ToInt32(Console.ReadLine())] );
+                        break;
+
+
+                }
+ 
+               
+            }
             //press enter to move to next question
            
         }
