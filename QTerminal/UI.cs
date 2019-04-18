@@ -71,10 +71,77 @@ namespace QTerminal
         }
         static void TestChange()
         {
+            string holder = "";
+            string answer;
             //get the test the user selected and display one question at a time 
+            for(int i = 0; i < test.HowManyQuestions();i++)
+            {
+                 
+                switch(test.Questions[i].Q_Type)
+                {
+                    
+                    case QTYPE.MultiChoice:
+                        Console.WriteLine("MC question #"+i+test.Questions[i].Test_Question);
+                        for(int t = 0; t < test.Questions[i].Answer.Length;t++)
+                        {
+                            Console.WriteLine( t +":" +test.Questions[i].Answer[t]);
+
+                            Console.WriteLine("Do you want to change this question: Y/N");
+                            answer = Console.ReadLine();
+                            if( answer == "y" || answer == "Y" )
+                            {
+                                
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        Console.WriteLine("");                       
+                        break;
+
+                    case QTYPE.ShortAnswer:
+                        Console.WriteLine("SA question #"+ i +":" +test.Questions[i].Test_Question);
+
+                         Console.WriteLine("Do you want to change this question: Y/N");
+                            answer = Console.ReadLine();
+                            if( answer == "y" || answer == "Y" )
+                            {
+                                
+                            }
+                            else
+                            {
+
+                            }
+
+                        Console.WriteLine("");  
+                        break;
+
+                    case QTYPE.TF:
+                        Console.WriteLine("TF question #"+ i +":" +test.Questions[i].Test_Question);
+                        for(int t = 0; t < test.Questions[i].Answer.Length;t++)
+                        {
+                            Console.WriteLine(t + ": " + test.Questions[i].Answer[t]);
+
+                            Console.WriteLine("Do you want to change this question: Y/N");
+                            answer = Console.ReadLine();
+                            if( answer == "y" || answer == "Y" )
+                            {
+                                
+                            }
+                            else
+                            {
+
+                            }
+                        }
+                        Console.WriteLine("");  
+                        break;
+
+                }
             //press enter to move to next question
            
         }
+    }   
         static void ChooseTest( string folder, string extinction )
         {   
             bool temp = true;
@@ -155,7 +222,11 @@ namespace QTerminal
                     break;
 
                 case "Administrator":
-                ChooseTest("./StudentAnswer", "testAnswer");
+                /* ??ask question to either grade or change a test
+                
+                //Grade....ChooseTest("./StudentAnswer", "testAnswer");
+                Change A test*/
+                ChooseTest("./Test", "test");
                 TestChange();
 
                     break;
