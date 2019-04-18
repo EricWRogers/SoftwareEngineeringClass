@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 
 namespace testDotNet
 {
-    class Test
+    public class Test
     {
         public string key { get; set; }
         public string TestName { get; set; }
@@ -102,20 +102,20 @@ namespace testDotNet
         }
         #endregion
     }
-    class StudentsTest
+    public class StudentsTest
     {
         public string Name { get; set; }
         public string Id { get; set; }
         public List<string> StudentAnswer = new List<string>();
     }
-    class Question
+    public class Question
     {
         public string Test_Question { get; set; }
         public QTYPE Q_Type { get; set; }
         public string[] Answer { get; set; }
         public int[] C_Answers { get; set; }
     }
-    class Grade{
+    public class Grade{
         public int TF_Correct { get; set; }
         public int TF_Wrong { get; set; }
         public int ShortAnswer_Correct { get; set; }
@@ -123,8 +123,13 @@ namespace testDotNet
         public int MultiChoice_Correct { get; set; }
         public int MultiChoice_Wrong  { get; set; }
     }
+<<<<<<< HEAD
     enum QTYPE { TF, ShortAnswer, MultiChoice };
     class Model
+=======
+    public enum QTYPE { TF, ShortAnswer, MultiChoise };
+    public class Model
+>>>>>>> master
     {
         #region ModelValue
         private static bool devMode = false;
