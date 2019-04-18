@@ -24,10 +24,10 @@ namespace testDotNet
                 switch(test.Questions[i].Q_Type)
                 {
                     case QTYPE.MultiChoice:
-                        Console.WriteLine(test.Questions[i].Test_Question);
+                        Console.WriteLine("MC question #"+i+test.Questions[i].Test_Question);
                         for(int t = 0; t < test.Questions[i].Answer.Length;t++)
                         {
-                            Console.WriteLine("MC question #"+ t +":" +test.Questions[i].Answer[t]);
+                            Console.WriteLine( t +":" +test.Questions[i].Answer[t]);
                         }
                         test.STest.StudentAnswer.Add(test.Questions[i].Answer[Convert.ToInt32(Console.ReadLine())] );
                        
