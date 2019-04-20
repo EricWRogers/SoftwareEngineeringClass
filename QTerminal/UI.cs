@@ -30,44 +30,17 @@ namespace QTerminal
             //get the test the user selected and display one question at a time
             for(int i = 0; i < test.HowManyQuestions();i++)
             {
-                switch(test.Questions[i].Q_Type)
+                if(test.Questions[i].Q_Type == QTYPE.ShortAnswer)
                 {
-                    case QTYPE.MultiChoice:
-                        Console.WriteLine("MC question #"+i+test.Questions[i].Test_Question);
-                        for(int t = 0; t < test.Questions[i].Answer.Length;t++)
-                        {
-                            Console.WriteLine( t +":" +test.Questions[i].Answer[t]);
-                        }
-                        test.STest.StudentAnswer.Add(test.Questions[i].Answer[Convert.ToInt32(Console.ReadLine())] );
-                       
-                        break;
-
-                    case QTYPE.ShortAnswer:
-                        Console.WriteLine("SA question #"+ i +":" +test.Questions[i].Test_Question);
-                        holder = Console.ReadLine();
-                        test.STest.StudentAnswer.Add(holder);
-                        break;
-
-                    case QTYPE.TF:
-                        Console.WriteLine("TF question #"+ i +":" +test.Questions[i].Test_Question);
-                        for(int t = 0; t < test.Questions[i].Answer.Length;t++)
-                        {
-                            Console.WriteLine(t + ": " + test.Questions[i].Answer[t]);
-                        }
-                        holder = "";
-                        holder = Console.ReadLine();
-                        int dfasdf = Convert.ToInt32(holder);
-                        test.STest.StudentAnswer.Add(test.Questions[i].Answer[dfasdf] );
-                        break;
-
+                    Console.WriteLine("SA question #"+ i +":" +test.Questions[i].Test_Question);
+                    holder = Console.ReadLine();
+                    test.STest.StudentAnswer.Add(holder);
+                }else{
+                    test.STest.StudentAnswer.Add(CheckResponce(test.Questions[i].Test_Question, test.Questions[i].Answer));
                 }
-
-               
             }
-            //save the test
+            // Save the test
             Model.SaveTest(test,"./StudentAnswer",test.TestName+test.STest.Name,"testAnswer");
-            //press enter to move to next question
-           
         }
         static void TestChange()
         {
@@ -177,37 +150,44 @@ namespace QTerminal
             string[] lines = File.ReadAllLines( folder+ "/" + testNames[response] + "." + extinction);
             test = Model.LoadTest(lines[0]);
         }
-        static string CheckResponce(string Question, string possible1, string possible2)
+        static string CheckResponce(string Question, string[] possible)
         {
-            bool temp = true;
-            string response;
-            string responseHolder = "";
+            bool loopControl = true;
+            string response = "";
 
-            while(temp)
+            while(loopControl)
             {
+                Console.WriteLine("");
                 Console.WriteLine(Question);
-                response = Console.ReadLine();
+                
+                // Print answer choices
+                for(int i = 0; i < possible.Length; i++)
+                {
+                    Console.WriteLine(i + ": " + possible[i]);
+                }
 
-                if(String.Equals(response , possible1, StringComparison.CurrentCultureIgnoreCase))
+                // Read the user response
+                response = Console.ReadLine();
+                int point = Convert.ToInt32(response);
+                Model.DebugLog("point: " + point + " possible.Length" + possible.Length);
+                if( -1 < point && point < possible.Length)
                 {
-                    responseHolder = possible1;
-                    temp = false;
+                    //if(String.Equals(possible[point] , possible[i], StringComparison.CurrentCultureIgnoreCase))
+                    response = possible[point];
+                    loopControl = false;
                 }
-                else if(String.Equals(response , possible2, StringComparison.CurrentCultureIgnoreCase))
-                {
-                    responseHolder = possible2;
-                    temp = false;
-                }
-                else
+
+                if(loopControl)
                 {
                     Console.WriteLine("Not A Valid Choise. Please Try Again");
                 }
             }
 
-            return responseHolder;
+            return response;
         }
         static void Main(string[] args)
         {
+            Model.devMode = true;
             //CheckResponce("Welcome to the Testing Center\nAre You a Student or Administrator", "Student", "Admin");
 
             Console.WriteLine("Welcome to the Testing Center");

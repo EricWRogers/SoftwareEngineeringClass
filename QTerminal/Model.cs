@@ -128,7 +128,7 @@ namespace QTerminal
     public class Model
     {
         #region ModelValue
-        private static bool devMode = false;
+        public static bool devMode = false;
         #endregion
         #region IO
         public static string[] LoadAvailableTest ( string dir, string fileEx )
@@ -138,10 +138,10 @@ namespace QTerminal
             {
                 // Only get files that end file extention .test
                 TestPack = Directory.GetFiles(dir, "*." + fileEx);
-                MessageLog("The number of files ending with ." + fileEx +" is " + TestPack.Length);
+                DebugLog("The number of files ending with ." + fileEx +" is " + TestPack.Length);
                 foreach (string test in TestPack)
                 {
-                    MessageLog(test);
+                    DebugLog(test);
                 }
                 return TestPack;
             }
@@ -197,7 +197,7 @@ namespace QTerminal
             try
             {
                 System.IO.Directory.CreateDirectory("./" + FolderName);
-                MessageLog("New Folder: " + FolderName);
+                DebugLog("New Folder: " + FolderName);
                 return true;
             }
             catch (Exception e)
@@ -206,7 +206,7 @@ namespace QTerminal
                 return false;
             }
         }
-        public static void MessageLog( string Message)
+        public static void DebugLog( string Message)
         {
             if(devMode)
             {
@@ -243,7 +243,7 @@ namespace QTerminal
             string json = JsonConvert.SerializeObject( test );
 
             // Printing json string
-            MessageLog(json);
+            DebugLog(json);
 
             // Test Saving file
             System.IO.File.WriteAllText("./Test/" + test.TestName + ".test", json);
@@ -257,7 +257,7 @@ namespace QTerminal
             foreach( string t in LoadAvailableTest("./Test", "test") )
             {
                 string[] lines = File.ReadAllLines(@t);
-                MessageLog(lines[0]);
+                DebugLog(lines[0]);
             }
         }*/
     }
