@@ -11,7 +11,6 @@ namespace QTerminal
 {
     class UI
     {
-       
         public static Test test;
         //initialize the application
         static void TakeTest()
@@ -115,40 +114,32 @@ namespace QTerminal
            
         }
     }   
-        static void ChooseTest( string folder, string extinction )
-        {   
-            bool temp = true;
-            int response;
+        static bool ChooseTest( string folder, string extinction, USER user )
+        {
+            string response = "";
 
             //get the tests 
             string[] testPath = Model.LoadAvailableTest(folder, extinction);
-            string[] testNames = Model.LoadTestNames(testPath,folder, extinction);
-
-            //display the test
-            for(int i = 0; i < testNames.Length;i++)
+            if(testPath.Length > 0)
             {
-                Console.WriteLine(i + ": " + testNames[i]);
+                string[] testNames = Model.LoadTestNames(testPath,folder, extinction);
+
+                //let user choose the test
+                response = CheckResponce("Choose a test", testNames);
+
+                string[] lines = File.ReadAllLines( folder+ "/" + response + "." + extinction);
+                test = Model.LoadTest(lines[0]);
+                if(user == USER.Student)
+                {
+                    TakeTest();
+                }
+                return true;
             }
-
-            //let user choose the test
-            response = Convert.ToInt32(Console.ReadLine());
-            
-
-
-            while(temp)
+            else
             {
-                if(response >= 0 && response < testNames.Length)
-                {
-                    temp = false;
-                }
-                else
-                {
-                    Console.WriteLine("Not A Valid Choice. Please Try Again");
-                }
+                Console.WriteLine("No file in folder: " + folder + "of type *." + extinction);
+                return false;
             }
-
-            string[] lines = File.ReadAllLines( folder+ "/" + testNames[response] + "." + extinction);
-            test = Model.LoadTest(lines[0]);
         }
         static string CheckResponce(string Question, string[] possible)
         {
@@ -168,13 +159,18 @@ namespace QTerminal
 
                 // Read the user response
                 response = Console.ReadLine();
-                int point = Convert.ToInt32(response);
-                Model.DebugLog("point: " + point + " possible.Length" + possible.Length);
-                if( -1 < point && point < possible.Length)
+                int point;
+                if(int.TryParse(response , out point)){
+                    Model.DebugLog("point: " + point + " possible.Length" + possible.Length);
+                    if( -1 < point && point < possible.Length)
+                    {
+                        response = possible[point];
+                        loopControl = false;
+                    }
+                }
+                else
                 {
-                    //if(String.Equals(possible[point] , possible[i], StringComparison.CurrentCultureIgnoreCase))
-                    response = possible[point];
-                    loopControl = false;
+                    Console.WriteLine("Please Enter a number");
                 }
 
                 if(loopControl)
@@ -191,26 +187,32 @@ namespace QTerminal
             //CheckResponce("Welcome to the Testing Center\nAre You a Student or Administrator", "Student", "Admin");
 
             Console.WriteLine("Welcome to the Testing Center");
-            Console.WriteLine("Are You a Student or Administrator");
-            string response = Console.ReadLine();
-            switch(response)
+            switch(CheckResponce("Which user type are you?",new string[]{"Student","Teacher"}))
             {
                 case "Student":
-                ChooseTest("./Test", "test");
-                TakeTest();
-
+                ChooseTest("./Test", "test", USER.Student);
                     break;
 
-                case "Administrator":
-                /* ??ask question to either grade or change a test
-                
-                //Grade....ChooseTest("./StudentAnswer", "testAnswer");
-                Change A test*/
-                ChooseTest("./Test", "test");
-                TestChange();
+                case "Teacher":
+                    switch(CheckResponce("Welcome back Teacher",new string[]{"Grade","New Test","Edit Test"}))
+                    {
+                        case "Grade":
+                            if(ChooseTest("./StudentAnswer", "testAnswer", USER.Teacher))
+                            {
+                                test.GradeTest();
+                            }
+                            else
+                            {
 
+                            }
+                            break;
+                        case "New Test":
+                            break;
+                        case "Edit Test":
+                            ChooseTest("./Test", "test", USER.Teacher);
+                            break;
+                    }
                     break;
-
                 default:
 
                 Console.WriteLine("Error: Not a valid choice please try again!");

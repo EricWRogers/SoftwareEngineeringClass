@@ -14,13 +14,13 @@ namespace QTerminal
         public string TestName { get; set; }
         public List<Question> Questions = new List<Question>();
         public StudentsTest STest = new StudentsTest();
-        public Grade GradeTest( QTYPE qType )
+        public Grade GradeTest()
         {
             int correct = 0;
             int wrong = 0;
             for(int q = 0; q < Questions.Count; q++)
             {
-                switch( qType )
+                switch( Questions[q].Q_Type )
                 {
                     case QTYPE.TF:
 
@@ -125,6 +125,7 @@ namespace QTerminal
     }
 
     public enum QTYPE { TF, ShortAnswer, MultiChoice };
+    public enum USER { Teacher, Student };
     public class Model
     {
         #region ModelValue
