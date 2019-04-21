@@ -35,7 +35,7 @@ namespace QTerminal
                     holder = Console.ReadLine();
                     test.STest.StudentAnswer.Add(holder);
                 }else{
-                    test.STest.StudentAnswer.Add(CheckResponce(test.Questions[i].Test_Question, test.Questions[i].Answer));
+                    test.STest.StudentAnswer.Add(Model.CheckResponce(test.Questions[i].Test_Question, test.Questions[i].Answer));
                 }
             }
             // Save the test
@@ -125,7 +125,7 @@ namespace QTerminal
                 string[] testNames = Model.LoadTestNames(testPath,folder, extinction);
 
                 //let user choose the test
-                response = CheckResponce("Choose a test", testNames);
+                response = Model.CheckResponce("Choose a test", testNames);
 
                 string[] lines = File.ReadAllLines( folder+ "/" + response + "." + extinction);
                 test = Model.LoadTest(lines[0]);
@@ -141,60 +141,20 @@ namespace QTerminal
                 return false;
             }
         }
-        static string CheckResponce(string Question, string[] possible)
-        {
-            bool loopControl = true;
-            string response = "";
-
-            while(loopControl)
-            {
-                Console.WriteLine("");
-                Console.WriteLine(Question);
-                
-                // Print answer choices
-                for(int i = 0; i < possible.Length; i++)
-                {
-                    Console.WriteLine(i + ": " + possible[i]);
-                }
-
-                // Read the user response
-                response = Console.ReadLine();
-                int point;
-                if(int.TryParse(response , out point)){
-                    Model.DebugLog("point: " + point + " possible.Length" + possible.Length);
-                    if( -1 < point && point < possible.Length)
-                    {
-                        response = possible[point];
-                        loopControl = false;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Please Enter a number");
-                }
-
-                if(loopControl)
-                {
-                    Console.WriteLine("Not A Valid Choise. Please Try Again");
-                }
-            }
-
-            return response;
-        }
         static void Main(string[] args)
         {
             Model.devMode = true;
             //CheckResponce("Welcome to the Testing Center\nAre You a Student or Administrator", "Student", "Admin");
 
             Console.WriteLine("Welcome to the Testing Center");
-            switch(CheckResponce("Which user type are you?",new string[]{"Student","Teacher"}))
+            switch(Model.CheckResponce("Which user type are you?",new string[]{"Student","Teacher"}))
             {
                 case "Student":
                 ChooseTest("./Test", "test", USER.Student);
                     break;
 
                 case "Teacher":
-                    switch(CheckResponce("Welcome back Teacher",new string[]{"Grade","New Test","Edit Test"}))
+                    switch(Model.CheckResponce("Welcome back Teacher",new string[]{"Grade","New Test","Edit Test"}))
                     {
                         case "Grade":
                             if(ChooseTest("./StudentAnswer", "testAnswer", USER.Teacher))

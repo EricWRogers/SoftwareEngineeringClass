@@ -14,30 +14,84 @@ namespace QTerminal
         public string TestName { get; set; }
         public List<Question> Questions = new List<Question>();
         public StudentsTest STest = new StudentsTest();
-        public Grade GradeTest()
+        public void GradeTest()
         {
             int correct = 0;
             int wrong = 0;
+            Grade grade = new Grade();
             for(int q = 0; q < Questions.Count; q++)
             {
+                Model.DebugSpace();
+                Console.WriteLine("Question: " + Questions[q].Test_Question);
                 switch( Questions[q].Q_Type )
                 {
                     case QTYPE.TF:
-
+                        for(int i = 0;i < Questions[q].C_Answers.Length;i++)
+                        {
+                            if(Questions[q].C_Answers[i] == 1)
+                            {
+                                Console.WriteLine(i+": " + Questions[q].Answer[Questions[q].C_Answers[i]] + " Correct");
+                                if(Questions[q].Answer[Questions[q].C_Answers[i]] == STest.StudentAnswer[q])
+                                {
+                                    grade.TF_Correct++;
+                                }
+                            }
+                            else{
+                                Console.WriteLine(i+": " + Questions[q].Answer[Questions[q].C_Answers[i]] + " Incorrect");
+                                if(Questions[q].Answer[Questions[q].C_Answers[i]] == STest.StudentAnswer[q])
+                                {
+                                    grade.TF_Wrong++;
+                                }
+                            }
+                        }                        
+                        Model.DebugSpace();
+                        Console.WriteLine("Students Answer: " + STest.StudentAnswer[q]);
                         break;
                     case QTYPE.ShortAnswer:
-
+                        Model.DebugSpace();
+                        Console.WriteLine("Students Answer: " + STest.StudentAnswer[q]);
+                        if("yes" == Model.CheckResponce("Is the answer acceptable?", new string[] {"yes", "no"}))
+                        {
+                            grade.ShortAnswer_Correct++;
+                        }
+                        else
+                        {
+                            grade.ShortAnswer_Wrong++;
+                        }
                         break;
                     case QTYPE.MultiChoice:
-
+                        for(int i = 0;i < Questions[q].C_Answers.Length;i++)
+                        {
+                            if(Questions[q].C_Answers[i] == 1)
+                            {
+                                Console.WriteLine(i+": " + Questions[q].Answer[Questions[q].C_Answers[i]] + " Correct");
+                                if(Questions[q].Answer[Questions[q].C_Answers[i]] == STest.StudentAnswer[q])
+                                {
+                                    grade.MultiChoice_Correct++;
+                                }
+                            }
+                            else{
+                                Console.WriteLine(i+": " + Questions[q].Answer[Questions[q].C_Answers[i]] + " Incorrect");
+                                if(Questions[q].Answer[Questions[q].C_Answers[i]] == STest.StudentAnswer[q])
+                                {
+                                    grade.MultiChoice_Wrong++;
+                                }
+                            }
+                        }
+                        Model.DebugSpace();
+                        Console.WriteLine("Students Answer: " + STest.StudentAnswer[q]);
                         break;
                 }
-                if(true)
-                {
-
-                }
+                
             }
-            return new Grade();
+            Console.WriteLine("grade.TF_Correct "+grade.TF_Correct);
+            Console.WriteLine("grade.TF_Wrong "+grade.TF_Wrong);
+            Console.WriteLine("grade.ShortAnswer_Correct "+grade.ShortAnswer_Correct);
+            Console.WriteLine("grade.ShortAnswer_Wrong "+grade.ShortAnswer_Wrong);
+            Console.WriteLine("grade.MultiChoice_Correct "+grade.MultiChoice_Correct);
+            Console.WriteLine("grade.MultiChoice_Wrong "+grade.MultiChoice_Wrong);
+            STest.Graded = true;
+            STest.StudentGrade = grade;
         }
         #region QuestionHelper
         public void AddQuestionTF( string question, bool answer )
@@ -106,7 +160,9 @@ namespace QTerminal
     {
         public string Name { get; set; }
         public string Id { get; set; }
+        public bool Graded = false;
         public List<string> StudentAnswer = new List<string>();
+        public Grade StudentGrade = new Grade();
     }
     public class Question
     {
@@ -207,12 +263,56 @@ namespace QTerminal
                 return false;
             }
         }
+        public static string CheckResponce(string Question, string[] possible)
+        {
+            bool loopControl = true;
+            string response = "";
+
+            while(loopControl)
+            {
+                Console.WriteLine("");
+                Console.WriteLine(Question);
+                
+                // Print answer choices
+                for(int i = 0; i < possible.Length; i++)
+                {
+                    Console.WriteLine(i + ": " + possible[i]);
+                }
+
+                // Read the user response
+                response = Console.ReadLine();
+                int point;
+                if(int.TryParse(response , out point)){
+                    Model.DebugLog("point: " + point + " possible.Length" + possible.Length);
+                    if( -1 < point && point < possible.Length)
+                    {
+                        response = possible[point];
+                        loopControl = false;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Please Enter a number");
+                }
+
+                if(loopControl)
+                {
+                    Console.WriteLine("Not A Valid Choise. Please Try Again");
+                }
+            }
+
+            return response;
+        }
         public static void DebugLog( string Message)
         {
             if(devMode)
             {
                 Console.WriteLine(Message);
             }
+        }
+        public static void DebugSpace()
+        {
+            Console.WriteLine(" ");
         }
         #endregion
         /*
