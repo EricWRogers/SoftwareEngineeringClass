@@ -28,15 +28,15 @@ namespace QTerminal
                         {
                             if(Questions[q].C_Answers[i] == 1)
                             {
-                                Console.WriteLine(i+": " + Questions[q].Answer[Questions[q].C_Answers[i]] + " Correct");
-                                if(Questions[q].Answer[Questions[q].C_Answers[i]] == STest.StudentAnswer[q])
+                                Console.WriteLine(i+": " + Questions[q].Answer[i] + " Correct");
+                                if(Questions[q].Answer[i] == STest.StudentAnswer[q])
                                 {
                                     grade.TF_Correct++;
                                 }
                             }
                             else{
-                                Console.WriteLine(i+": " + Questions[q].Answer[Questions[q].C_Answers[i]] + " Incorrect");
-                                if(Questions[q].Answer[Questions[q].C_Answers[i]] == STest.StudentAnswer[q])
+                                Console.WriteLine(i+": " + Questions[q].Answer[i] + " Incorrect");
+                                if(Questions[q].Answer[i] == STest.StudentAnswer[q])
                                 {
                                     grade.TF_Wrong++;
                                 }
@@ -62,14 +62,14 @@ namespace QTerminal
                         {
                             if(Questions[q].C_Answers[i] == 1)
                             {
-                                Console.WriteLine(i+": " + Questions[q].Answer[Questions[q].C_Answers[i]] + " Correct");
+                                Console.WriteLine(i+": " + Questions[q].Answer[i] + " Correct");
                                 if(Questions[q].Answer[Questions[q].C_Answers[i]] == STest.StudentAnswer[q])
                                 {
                                     grade.MultiChoice_Correct++;
                                 }
                             }
                             else{
-                                Console.WriteLine(i+": " + Questions[q].Answer[Questions[q].C_Answers[i]] + " Incorrect");
+                                Console.WriteLine(i+": " + Questions[q].Answer[i] + " Incorrect");
                                 if(Questions[q].Answer[Questions[q].C_Answers[i]] == STest.StudentAnswer[q])
                                 {
                                     grade.MultiChoice_Wrong++;
@@ -228,7 +228,6 @@ namespace QTerminal
         {
             try
             {
-                test.TestName = fileName;
                 string json = JsonConvert.SerializeObject(test);
                 System.IO.File.WriteAllText(dir + "/" + fileName + "." + fileEx, json);
             }
@@ -247,7 +246,7 @@ namespace QTerminal
             }
             return newFileNames;
         }
-        private static bool makeFolder( string FolderName)
+        public static bool makeFolder( string FolderName)
         {
             try
             {
