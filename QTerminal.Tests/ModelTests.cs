@@ -9,14 +9,15 @@ namespace QTerminal.Tests
     public class ModelTests
     {
         [Theory]
-        //[InlineData("../../../../QTerminal/Test", "test", "Error")]
-        //[InlineData("../../../../QTerminal/StudentAnswer", "testAnswer")]
-        //[InlineData("kjhkjh", "kjhkjh", "ukjh")]
-        public void LoadAvailableTest_TestingError()
+        [InlineData("../../../../QTerminal/Test", "test")]
+        [InlineData("../../../../QTerminal/StudentAnswer", "testAnswer")]
+        [InlineData("kjhkjh", "kjhkjh")]
+        public void LoadAvailableTest_TestingForErrors(string dir, string fileEX)
         {
-            Model model = new Model();
-            Action act = () => Model.LoadAvailableTest("../", "test");
-            Assert.Throws<Exception>(act);
+            String[] expected = {"Error"};
+            Assert.NotEqual<String>(expected, Model.LoadAvailableTest(dir, fileEX));
         }
+
+        
     }
 }
