@@ -12,7 +12,6 @@ namespace QTerminal
     class UI
     {
         public static Test test;
-        //initialize the application
         static void TakeTest()
         {
          
@@ -237,6 +236,3 @@ namespace QTerminal
         }
     }
 }
-
-
-
