@@ -16,8 +16,6 @@ namespace QTerminal
         public StudentsTest STest = new StudentsTest();
         public void GradeTest()
         {
-            int correct = 0;
-            int wrong = 0;
             Grade grade = new Grade();
             for(int q = 0; q < Questions.Count; q++)
             {
@@ -262,6 +260,32 @@ namespace QTerminal
                 Console.WriteLine("The process makeFolder failed: {0}", e.ToString());
                 return false;
             }
+        }
+        public static string CheckString( string Question )
+        {
+            bool loopControl = true;
+            string response = "";
+
+            while(loopControl)
+            {
+                Console.WriteLine(" ");
+                Console.WriteLine(Question);
+
+                // Read the user response
+                response = Console.ReadLine();
+
+                // TODO: add checking for / and ~
+                if(response.Length > 0)
+                {
+                    loopControl = false;
+                }
+                else
+                {
+                    Console.WriteLine("Not A Valid Choise. Please Try Again");
+                }
+            }
+
+            return response;
         }
         public static string CheckResponce(string Question, string[] possible)
         {

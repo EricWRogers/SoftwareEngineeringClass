@@ -43,7 +43,6 @@ namespace QTerminal
         }
         static void TestChange()
         {
-            string holder = "";
             string answer;
             //get the test the user selected and display one question at a time 
             for(int i = 0; i < test.HowManyQuestions();i++)
@@ -141,6 +140,61 @@ namespace QTerminal
                 return false;
             }
         }
+        static void MakeTest()
+        {
+            bool makeingTest = true;
+            string question = "";
+            string[] answer = {"","","",""};
+            int[] correct = {0,0,0,0};
+            int[] correctBackup = {0,0,0,0};
+
+            // Reset Test data
+            test = new Test();
+
+            // Set Test Name
+            test.TestName = Model.CheckString("Test Name");
+            // Set Test Key
+            test.key = Model.CheckString("Test Key");
+
+            while(makeingTest)
+            {
+                switch(Model.CheckResponce("Test Menu",new string[]{"TF","ShortAnswer","Multible Choice","Save&Exit"}))
+                {
+                    case "TF":
+                        test.AddQuestionTF(Model.CheckString("Enter Question"),("true"==Model.CheckResponce("Enter Answer", new string[] {"true","false"})));
+                        break;
+                    case "ShortAnswer":
+                        test.AddQuestionShort(Model.CheckString("Enter Question"), Model.CheckString("Enter Answer"));
+                        break;
+                    case "Multible Choice":
+                        question = Model.CheckString("Enter Question");
+                        answer = new string[]{
+                            Model.CheckString("Enter Answer #0 "),
+                            Model.CheckString("Enter Answer #1 "),
+                            Model.CheckString("Enter Answer #2 "),
+                            Model.CheckString("Enter Answer #3 ")
+                        };
+                        correct = correctBackup;
+                        string correctAnswer = Model.CheckResponce("Which answer is correct",answer);
+                        for(int i = 0;i < answer.Length; i++)
+                        {
+                            if(answer[i] == correctAnswer)
+                            {
+                                    correct[i] = 1;
+                            }
+                        }
+
+                        test.AddAnswerMulti(question,answer,correct);
+                        break;
+                    case "Save&Exit":
+                        makeingTest = false;
+                        break;
+                }
+            }
+
+            // Save Test
+            Model.SaveTest(test,"./Test",test.TestName,"test");
+        }
         static void Main(string[] args)
         {
             Model.devMode = true;
@@ -160,6 +214,7 @@ namespace QTerminal
                             if(ChooseTest("./StudentAnswer", "testAnswer", USER.Teacher))
                             {
                                 test.GradeTest();
+                                Model.SaveTest(test,"./StudentAnswer",test.TestName+test.STest.Name,"testAnswer");
                             }
                             else
                             {
@@ -167,6 +222,7 @@ namespace QTerminal
                             }
                             break;
                         case "New Test":
+                            MakeTest();
                             break;
                         case "Edit Test":
                             ChooseTest("./Test", "test", USER.Teacher);
