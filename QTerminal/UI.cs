@@ -41,7 +41,7 @@ namespace QTerminal
                 }
             }
             // Save the test
-            Model.SaveTest(test,"./StudentAnswer",test.TestName+test.STest.Name,"testAnswer");
+            Model.SaveTest(test,"./StudentAnswer",test.TestName+"_"+test.STest.Name,"testAnswer");
         }
         /// <summary>
         /// Allows user's the pick with test to load
