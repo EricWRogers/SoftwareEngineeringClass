@@ -12,6 +12,9 @@ namespace QTerminal
     class UI
     {
         public static Test test;
+        /// <summary>
+        /// 
+        /// </summary>
         static void TakeTest()
         {
          
@@ -40,6 +43,9 @@ namespace QTerminal
             // Save the test
             Model.SaveTest(test,"./StudentAnswer",test.TestName+test.STest.Name,"testAnswer");
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static void TestChange()
         {
             string answer;
@@ -112,6 +118,12 @@ namespace QTerminal
            
         }
     }   
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="folder">Used to indicate status.</param>
+        /// <param name="extinction">Used to indicate status.</param>
+        /// <param name="user">Used to indicate status.</param>
         static bool ChooseTest( string folder, string extinction, USER user )
         {
             string response = "";
@@ -139,6 +151,9 @@ namespace QTerminal
                 return false;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         static void MakeTest()
         {
             bool makeingTest = true;

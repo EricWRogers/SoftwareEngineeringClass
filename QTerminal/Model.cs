@@ -186,6 +186,11 @@ namespace QTerminal
         public static bool devMode = false;
         #endregion
         #region IO
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="dir">Used to indicate status.</param>
+        /// <param name="fileEx">Used to indicate status.</param>
         public static string[] LoadAvailableTest ( string dir, string fileEx )
         {
             String[] TestPack = {"Error"};
@@ -207,23 +212,21 @@ namespace QTerminal
                 return TestPack;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="json">Used to indicate status.</param>
         public static Test LoadTest( string json )
         {
             return JsonConvert.DeserializeObject<Test>( json );
         } 
-        /* public static void SaveTest ( Test test, string file)
-        {
-            try
-            {
-                string json = JsonConvert.SerializeObject(test);
-                System.IO.File.WriteAllText(file, json);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("The process failed: {0}", e.ToString());
-                Console.WriteLine("Error saving test");
-            }
-        }*/
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="test">Used to indicate status.</param>
+        /// <param name="dir">Used to indicate status.</param>
+        /// <param name="fileName">Used to indicate status.</param>
+        /// <param name="fileEx">Used to indicate status.</param>
         public static void SaveTest ( Test test, string dir, string fileName, string fileEx)
         {
             try
@@ -237,6 +240,12 @@ namespace QTerminal
                 Console.WriteLine("Error saving test");
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="testFileNames">Used to indicate status.</param>
+        /// <param name="dirName">Used to indicate status.</param>
+        /// <param name="extension">Used to indicate status.</param>
         public static string[] LoadTestNames(string[] testFileNames, string dirName, string extension)
         {
             string[] newFileNames = testFileNames;
@@ -246,6 +255,10 @@ namespace QTerminal
             }
             return newFileNames;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="FolderName">Used to indicate status.</param>
         public static bool makeFolder( string FolderName)
         {
             try
@@ -260,6 +273,10 @@ namespace QTerminal
                 return false;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Question">Used to indicate status.</param>
         public static string CheckString( string Question )
         {
             bool loopControl = true;
@@ -286,6 +303,11 @@ namespace QTerminal
 
             return response;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Question">Used to indicate status.</param>
+        /// <param name="possible">Used to indicate status.</param>
         public static string CheckResponce(string Question, string[] possible)
         {
             bool loopControl = true;
@@ -326,6 +348,10 @@ namespace QTerminal
 
             return response;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Message">Used to indicate status.</param>
         public static void DebugLog( string Message)
         {
             if(devMode)
@@ -338,51 +364,55 @@ namespace QTerminal
             Console.WriteLine(" ");
         }
         #endregion
-        /*
-        static void Main(string[] args)
-        {
-            // Set Dev Mode
-            // Dev Mode will enable functions that are usfull for testing
-            // Should only be set true while in testing
-            devMode = true;
-
-            // Make the Folders
-            makeFolder("Test");
-            makeFolder("StudentAnswer");
-
-            // Load String[] of Test filepaths
-            LoadAvailableTest("./Test", "test");
-            LoadAvailableTest("./StudentAnswer", "testAnswer");
-
-            // Making test object
-            // This will not be done here in the future
-            Test test = new Test();
-            test.key = "Eric";
-            test.TestName = "SE_Test_01";
-            test.AddQuestionTF( "How height is tall", true );
-            test.AddQuestionShort( "How height is tall", "very tall");
-            test.AddQuestionMulti( "How height is tall", new string[]{"very tall", "very much tall"}, new int[]{1,0});
-
-            // Convert test object into json string
-            string json = JsonConvert.SerializeObject( test );
-
-            // Printing json string
-            DebugLog(json);
-
-            // Test Saving file
-            System.IO.File.WriteAllText("./Test/" + test.TestName + ".test", json);
-
-            // Saving test data to file in test folder
-            SaveTest(test, "./Test", "SE_Test_02", "test");
-
-            // Load an array of file paths as string
-            // Cycle through them 
-            // Print the json
-            foreach( string t in LoadAvailableTest("./Test", "test") )
-            {
-                string[] lines = File.ReadAllLines(@t);
-                DebugLog(lines[0]);
-            }
-        }*/
+        /// <example> 
+        /// This sample shows how to call the these ModelHelper function.
+        /// <code>
+        /// static void Main(string[] args)
+        /// {
+        ///     // Set Dev Mode
+        ///     // Dev Mode will enable functions that are usfull for testing
+        ///     // Should only be set true while in testing
+        ///     devMode = true;
+        /// 
+        ///     // Make the Folders
+        ///     makeFolder("Test");
+        ///     makeFolder("StudentAnswer");
+        /// 
+        ///     // Load String[] of Test filepaths
+        ///     LoadAvailableTest("./Test", "test");
+        ///     LoadAvailableTest("./StudentAnswer", "testAnswer");
+        /// 
+        ///     // Making test object
+        ///     // This will not be done here in the future
+        ///     Test test = new Test();
+        ///     test.key = "Eric";
+        ///     test.TestName = "SE_Test_01";
+        ///     test.AddQuestionTF( "How height is tall", true );
+        ///     test.AddQuestionShort( "How height is tall", "very tall");
+        ///     test.AddQuestionMulti( "How height is tall", new string[]{"very tall", "very much tall"}, new int[]{1,0});
+        /// 
+        ///     // Convert test object into json string
+        ///     string json = JsonConvert.SerializeObject( test );
+        /// 
+        ///     // Printing json string
+        ///     DebugLog(json);
+        /// 
+        ///     // Test Saving file
+        ///     System.IO.File.WriteAllText("./Test/" + test.TestName + ".test", json);
+        /// 
+        ///     // Saving test data to file in test folder
+        ///     SaveTest(test, "./Test", "SE_Test_02", "test");
+        /// 
+        ///     // Load an array of file paths as string
+        ///     // Cycle through them 
+        ///     // Print the json
+        ///     foreach( string t in LoadAvailableTest("./Test", "test") )
+        ///     {
+        ///         string[] lines = File.ReadAllLines(@t);
+        ///         DebugLog(lines[0]);
+        ///     }
+        /// }
+        /// </code>
+        /// </example>
     }
 }
