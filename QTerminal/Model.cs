@@ -187,10 +187,10 @@ namespace QTerminal
         #endregion
         #region IO
         /// <summary>
-        /// 
+        /// Return's the full test path for all the test's in directory dir with the file extension fileEx
         /// </summary>
-        /// <param name="dir">Used to indicate status.</param>
-        /// <param name="fileEx">Used to indicate status.</param>
+        /// <param name="dir">The folder path to store the Test</param>
+        /// <param name="fileEx">The Test file extension</param>
         public static string[] LoadAvailableTest ( string dir, string fileEx )
         {
             String[] TestPack = {"Error"};
@@ -213,26 +213,27 @@ namespace QTerminal
             }
         }
         /// <summary>
-        /// 
+        /// Return's a Test Object from a json string
         /// </summary>
-        /// <param name="json">Used to indicate status.</param>
+        /// <param name="json"></param>
         public static Test LoadTest( string json )
         {
             return JsonConvert.DeserializeObject<Test>( json );
         } 
         /// <summary>
-        /// 
+        /// Saving the Test in json format in the dir/fileName.fileEx
         /// </summary>
-        /// <param name="test">Used to indicate status.</param>
-        /// <param name="dir">Used to indicate status.</param>
-        /// <param name="fileName">Used to indicate status.</param>
-        /// <param name="fileEx">Used to indicate status.</param>
+        /// <param name="test">Test Object to be saved</param>
+        /// <param name="dir">The folder path to store the Test</param>
+        /// <param name="fileName">The test name's excluding the path and file extension</param>
+        /// <param name="fileEx">The Test file extension</param>
         public static void SaveTest ( Test test, string dir, string fileName, string fileEx)
         {
             try
             {
+                string newFileName = fileName.Replace(" ", "_");
                 string json = JsonConvert.SerializeObject(test);
-                System.IO.File.WriteAllText(dir + "/" + fileName + "." + fileEx, json);
+                System.IO.File.WriteAllText(dir + "/" + newFileName + "." + fileEx, json);
             }
             catch (Exception e)
             {
@@ -241,11 +242,11 @@ namespace QTerminal
             }
         }
         /// <summary>
-        /// 
+        /// Return a string[] of just the test name's excluding the path and file extension
         /// </summary>
-        /// <param name="testFileNames">Used to indicate status.</param>
-        /// <param name="dirName">Used to indicate status.</param>
-        /// <param name="extension">Used to indicate status.</param>
+        /// <param name="testFileNames">List of all test name</param>
+        /// <param name="dirName">The folder path to store the Test</param>
+        /// <param name="extension">The Test file extension</param>
         public static string[] LoadTestNames(string[] testFileNames, string dirName, string extension)
         {
             string[] newFileNames = testFileNames;
@@ -256,9 +257,9 @@ namespace QTerminal
             return newFileNames;
         }
         /// <summary>
-        /// 
+        /// An Folder making function
         /// </summary>
-        /// <param name="FolderName">Used to indicate status.</param>
+        /// <param name="FolderName">Name of the folder to be made</param>
         public static bool makeFolder( string FolderName)
         {
             try
@@ -274,9 +275,9 @@ namespace QTerminal
             }
         }
         /// <summary>
-        /// 
+        /// Returns an users response to a question in to form of a string
         /// </summary>
-        /// <param name="Question">Used to indicate status.</param>
+        /// <param name="Question"></param>
         public static string CheckString( string Question )
         {
             bool loopControl = true;
@@ -304,10 +305,10 @@ namespace QTerminal
             return response;
         }
         /// <summary>
-        /// 
+        /// A robust CheckResponce function that insurse the user enters an acceptable response
         /// </summary>
-        /// <param name="Question">Used to indicate status.</param>
-        /// <param name="possible">Used to indicate status.</param>
+        /// <param name="Question">Question for user to respond to</param>
+        /// <param name="possible">An array of possible responses</param>
         public static string CheckResponce(string Question, string[] possible)
         {
             bool loopControl = true;
@@ -349,9 +350,9 @@ namespace QTerminal
             return response;
         }
         /// <summary>
-        /// 
+        /// A writeline for debug only and should not be visible in public releases
         /// </summary>
-        /// <param name="Message">Used to indicate status.</param>
+        /// <param name="Message">Debug message</param>
         public static void DebugLog( string Message)
         {
             if(devMode)
@@ -359,13 +360,16 @@ namespace QTerminal
                 Console.WriteLine(Message);
             }
         }
+        /// <summary>
+        /// Add's a new empty line
+        /// </summary>
         public static void DebugSpace()
         {
             Console.WriteLine(" ");
         }
         #endregion
         /// <example> 
-        /// This sample shows how to call the these ModelHelper function.
+        /// This sample shows how to call the these ModelHelper.
         /// <code>
         /// static void Main(string[] args)
         /// {

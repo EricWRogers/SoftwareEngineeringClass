@@ -13,7 +13,7 @@ namespace QTerminal
     {
         public static Test test;
         /// <summary>
-        /// 
+        /// Allowing user's to take test
         /// </summary>
         static void TakeTest()
         {
@@ -44,86 +44,12 @@ namespace QTerminal
             Model.SaveTest(test,"./StudentAnswer",test.TestName+test.STest.Name,"testAnswer");
         }
         /// <summary>
-        /// 
+        /// Allows user's the pick with test to load
+        /// for all the test's in directory dir with the file extension fileEx
         /// </summary>
-        static void TestChange()
-        {
-            string answer;
-            //get the test the user selected and display one question at a time 
-            for(int i = 0; i < test.HowManyQuestions();i++)
-            {
-                 
-                switch(test.Questions[i].Q_Type)
-                {
-                    
-                    case QTYPE.MultiChoice:
-                        Console.WriteLine("MC question #"+i+test.Questions[i].Test_Question);
-                        for(int t = 0; t < test.Questions[i].Answer.Length;t++)
-                        {
-                            Console.WriteLine( t +":" +test.Questions[i].Answer[t]);
-
-                            Console.WriteLine("Do you want to change this question: Y/N");
-                            answer = Console.ReadLine();
-                            if( answer == "y" || answer == "Y" )
-                            {
-                                
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                        Console.WriteLine("");                       
-                        break;
-
-                    case QTYPE.ShortAnswer:
-                        Console.WriteLine("SA question #"+ i +":" +test.Questions[i].Test_Question);
-
-                         Console.WriteLine("Do you want to change this question: Y/N");
-                            answer = Console.ReadLine();
-                            if( answer == "y" || answer == "Y" )
-                            {
-                                
-                            }
-                            else
-                            {
-
-                            }
-
-                        Console.WriteLine("");  
-                        break;
-
-                    case QTYPE.TF:
-                        Console.WriteLine("TF question #"+ i +":" +test.Questions[i].Test_Question);
-                        for(int t = 0; t < test.Questions[i].Answer.Length;t++)
-                        {
-                            Console.WriteLine(t + ": " + test.Questions[i].Answer[t]);
-
-                            Console.WriteLine("Do you want to change this question: Y/N");
-                            answer = Console.ReadLine();
-                            if( answer == "y" || answer == "Y" )
-                            {
-                                
-                            }
-                            else
-                            {
-
-                            }
-                        }
-                        Console.WriteLine("");  
-                        break;
-
-                }
-            //press enter to move to next question
-           
-        }
-    }   
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="folder">Used to indicate status.</param>
-        /// <param name="extinction">Used to indicate status.</param>
-        /// <param name="user">Used to indicate status.</param>
+        /// <param name="folder">The folder path to store the Test</param>
+        /// <param name="extinction">The Test file extension</param>
+        /// <param name="user">Chosen user type</param>
         static bool ChooseTest( string folder, string extinction, USER user )
         {
             string response = "";
@@ -152,7 +78,7 @@ namespace QTerminal
             }
         }
         /// <summary>
-        /// 
+        /// Allowing teacher's to Creat Test's
         /// </summary>
         static void MakeTest()
         {
@@ -222,13 +148,13 @@ namespace QTerminal
                     break;
 
                 case "Teacher":
-                    switch(Model.CheckResponce("Welcome back Teacher",new string[]{"Grade","New Test","Edit Test"}))
+                    switch(Model.CheckResponce("Welcome back Teacher",new string[]{"Grade","New Test"}))
                     {
                         case "Grade":
                             if(ChooseTest("./StudentAnswer", "testAnswer", USER.Teacher))
                             {
                                 test.GradeTest();
-                                Model.SaveTest(test,"./StudentAnswer",test.TestName+test.STest.Name,"testAnswer");
+                                Model.SaveTest(test,"./StudentAnswer",test.TestName+"_"+test.STest.Name,"testAnswer");
                             }
                             else
                             {
@@ -237,9 +163,6 @@ namespace QTerminal
                             break;
                         case "New Test":
                             MakeTest();
-                            break;
-                        case "Edit Test":
-                            ChooseTest("./Test", "test", USER.Teacher);
                             break;
                     }
                     break;
